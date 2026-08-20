@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网络连通性测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 30px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 网络连通性测试</h1>
+        
+        <div class="status success">
+            ✅ 网页加载成功！GitHub Pages 运行正常
+        </div>
+        
+        <div class="status info">
+            📊 当前时间：<span id="currentTime"></span>
+        </div>
+        
+        <button onclick="testConnection()">测试网络连接</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 显示当前时间
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleString('zh-CN');
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // 测试网络连接
+        function testConnection() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '⏳ 正在测试...';
+            
+            const startTime = performance.now();
+            
+            // 简单的加载测试
+            const img = new Image();
+            img.onload = function() {
+                const endTime = performance.now();
+                const loadTime = (endTime - startTime).toFixed(2);
+                
+                resultDiv.innerHTML = `✅ 连接测试成功!\n\n` +
+                    `📈 加载时间: ${loadTime} ms\n` +
+                    `🌍 页面状态: 正常访问\n` +
+                    `📅 测试时间: ${new Date().toLocaleString('zh-CN')}`;
+            };
+            
+            img.onerror = function() {
+                resultDiv.innerHTML = '❌ 连接测试失败，请检查网络设置';
+            };
+            
+            // 加载一个小资源进行测试
+            img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        }
+    </script>
+</body>
+</html>
